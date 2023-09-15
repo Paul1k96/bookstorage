@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  library:
+    container_name: ${APP_NAME}_api
+    build: .
+    env_file: .env
+    command: bash -c "go mod tidy && go run ./cmd/api"
+    hostname: books
+    restart: always
+    ports:
+      - ${HOST}:${PORT}:${PORT}
+    networks:
+      - skynet
+      - books_net
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+  db:
+    container_name: ${APP_NAME}_db
+    image: mysql:8
+    hostname: ${DB_HOST}
+    restart: always
+    ports:
+      - ${HOST}:${DB_PORT}:${DB_PORT}
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+    volumes:
+      - ./db:/var/lib/mysql/
+    networks:
+      - books_net
+
+networks:
+  books_net:
+    name: books_net
+  skynet:
+    external: true
+    name: skynet

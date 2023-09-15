@@ -1,0 +1,158 @@
+{
+  "swagger": "2.0",
+  "paths": {
+    "/api/1/books/get_authors": {
+      "get": {
+        "tags": [
+          "books"
+        ],
+        "summary": "Получение авторов по книге.",
+        "operationId": "authorsRequest",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/authorsResponse"
+          }
+        }
+      }
+    },
+    "/api/1/books/get_books": {
+      "get": {
+        "tags": [
+          "books"
+        ],
+        "summary": "Получение книг по автору.",
+        "operationId": "booksRequest",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/booksResponse"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Author": {
+      "description": "go:generate easytags $GOFILE json,db",
+      "type": "object",
+      "properties": {
+        "firstname": {
+          "type": "string",
+          "x-go-name": "Firstname"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "ID"
+        },
+        "lastname": {
+          "type": "string",
+          "x-go-name": "Lastname"
+        }
+      },
+      "x-go-package": "github.com/Paul1k96/bookstorage/internal/models"
+    },
+    "AuthorsRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "x-go-name": "Name"
+        }
+      },
+      "x-go-package": "github.com/Paul1k96/bookstorage/internal/modules/books/controller"
+    },
+    "AuthorsResponse": {
+      "type": "object",
+      "properties": {
+        "authors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Author"
+          },
+          "x-go-name": "Authors"
+        },
+        "error_code": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "ErrorCode"
+        },
+        "message": {
+          "type": "string",
+          "x-go-name": "Message"
+        },
+        "success": {
+          "type": "boolean",
+          "x-go-name": "Success"
+        }
+      },
+      "x-go-package": "github.com/Paul1k96/bookstorage/internal/modules/books/controller"
+    },
+    "Book": {
+      "description": "go:generate easytags $GOFILE json,db",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "ID"
+        },
+        "name": {
+          "type": "string",
+          "x-go-name": "Name"
+        }
+      },
+      "x-go-package": "github.com/Paul1k96/bookstorage/internal/models"
+    },
+    "BooksRequest": {
+      "description": "go:generate easytags $GOFILE",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "x-go-name": "Name"
+        }
+      },
+      "x-go-package": "github.com/Paul1k96/bookstorage/internal/modules/books/controller"
+    },
+    "BooksResponse": {
+      "type": "object",
+      "properties": {
+        "books": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Book"
+          },
+          "x-go-name": "Books"
+        },
+        "error_code": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "ErrorCode"
+        },
+        "message": {
+          "type": "string",
+          "x-go-name": "Message"
+        },
+        "success": {
+          "type": "boolean",
+          "x-go-name": "Success"
+        }
+      },
+      "x-go-package": "github.com/Paul1k96/bookstorage/internal/modules/books/controller"
+    }
+  },
+  "responses": {
+    "AuthorsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/AuthorsResponse"
+      }
+    },
+    "BooksResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/BooksResponse"
+      }
+    }
+  }
+}

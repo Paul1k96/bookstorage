@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+option go_package = "github.com/Paul1k96/bookstorage/pkg/grpc/books;books";
+
+package books;
+
+service BookServiceGRPC {
+    rpc GetBooksByAuthor(GetBooksByAuthorIn) returns (GetBooksByAuthorOut) {}
+    rpc GetAuthorsByBook(GetAuthorsByBookIn) returns (GetAuthorsByBookOut) {}
+}
+
+message Author {
+    int32 id = 1;
+    string name = 2;
+}
+
+message Book {
+    int32 id = 1;
+    string name = 2;
+}
+
+message GetBooksByAuthorIn {
+    string author = 1;
+}
+
+message GetBooksByAuthorOut {
+    repeated Book books = 1;
+    int32 error_code = 2;
+}
+
+message GetAuthorsByBookIn {
+    string book = 1;
+}
+
+message GetAuthorsByBookOut {
+    repeated Author authors = 1;
+    int32 error_code = 2;
+}
