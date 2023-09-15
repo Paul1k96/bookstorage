@@ -7,16 +7,15 @@ import "github.com/Paul1k96/bookstorage/internal/modules/books/controller"
 // swagger:route GET /api/1/books/get_books books booksRequest
 // Получение книг по автору.
 // responses:
-//
 //	200: booksResponse
 
-// swagger:parameters BooksRequest
+// swagger:parameters booksRequest
 type booksRequest struct {
 	// in:body
 	Body controller.BooksRequest
 }
 
-// swagger:response BooksResponse
+// swagger:response booksResponse
 type booksResponse struct {
 	// in:body
 	Body controller.BooksResponse
@@ -27,13 +26,13 @@ type booksResponse struct {
 // responses:
 //	200: authorsResponse
 
-// swagger:parameters AuthorsRequest
+// swagger:parameters authorsRequest
 type authorsRequest struct {
 	// in:body
 	Body controller.AuthorsRequest
 }
 
-// swagger:response AuthorsResponse
+// swagger:response authorsResponse
 type authorsResponse struct {
 	// in:body
 	Body controller.AuthorsResponse

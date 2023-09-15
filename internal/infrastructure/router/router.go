@@ -10,6 +10,7 @@ import (
 
 func NewRouter(controllers *modules.Controllers) *chi.Mux {
 	r := chi.NewRouter()
+	setSwagger(r)
 
 	r.Mount("/", router.NewApiRouter(controllers))
 	return r
