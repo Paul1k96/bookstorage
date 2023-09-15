@@ -54,6 +54,7 @@ func NewAppConf() AppConf {
 			Port: os.Getenv(serverPort),
 		},
 		DB: DB{
+			Net:      os.Getenv("DB_NET"),
 			Driver:   os.Getenv("DB_DRIVER"),
 			Name:     os.Getenv("DB_NAME"),
 			User:     os.Getenv("DB_USER"),
