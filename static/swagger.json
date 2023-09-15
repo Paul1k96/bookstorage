@@ -8,6 +8,15 @@
         ],
         "summary": "Получение авторов по книге.",
         "operationId": "authorsRequest",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/AuthorsRequest"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "$ref": "#/responses/authorsResponse"
@@ -22,6 +31,15 @@
         ],
         "summary": "Получение книг по автору.",
         "operationId": "booksRequest",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/BooksRequest"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "$ref": "#/responses/booksResponse"
@@ -35,18 +53,14 @@
       "description": "go:generate easytags $GOFILE json,db",
       "type": "object",
       "properties": {
-        "firstname": {
-          "type": "string",
-          "x-go-name": "Firstname"
-        },
         "id": {
           "type": "integer",
           "format": "int64",
           "x-go-name": "ID"
         },
-        "lastname": {
+        "name": {
           "type": "string",
-          "x-go-name": "Lastname"
+          "x-go-name": "Name"
         }
       },
       "x-go-package": "github.com/Paul1k96/bookstorage/internal/models"
@@ -142,13 +156,13 @@
     }
   },
   "responses": {
-    "AuthorsResponse": {
+    "authorsResponse": {
       "description": "",
       "schema": {
         "$ref": "#/definitions/AuthorsResponse"
       }
     },
-    "BooksResponse": {
+    "booksResponse": {
       "description": "",
       "schema": {
         "$ref": "#/definitions/BooksResponse"
