@@ -21,7 +21,7 @@ func (bs *BookStorage) GetBooksByAuthor(author string) ([]models.Book, error) {
 		FROM authors_books ab
 		INNER JOIN books b ON b.book_id = ab.book_id
 		INNER JOIN authors a ON a.author_id = ab.author_id
-		WHERE a.author_name = $1
+		WHERE a.author_name = ?
 	`
 
 	if err := bs.db.Select(&books, stmt, author); err != nil {
@@ -35,11 +35,11 @@ func (bs *BookStorage) GetAuthorsByBook(book string) ([]models.Author, error) {
 	var authors []models.Author
 
 	stmt := `
-		SELECT b.book_id, b.book_name
+		SELECT a.author_id, a.author_name
 		FROM authors_books ab
 		INNER JOIN books b ON b.book_id = ab.book_id
 		INNER JOIN authors a ON a.author_id = ab.author_id
-		WHERE a.book_name = $1
+		WHERE b.book_name = ?
 	`
 
 	if err := bs.db.Select(&authors, stmt, book); err != nil {

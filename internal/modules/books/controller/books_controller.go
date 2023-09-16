@@ -19,8 +19,8 @@ type Books struct {
 	responder.Responder
 }
 
-func NewBooks(service service.BookServicer) Booker {
-	return &Books{service: service}
+func NewBooks(service service.BookServicer, r responder.Responder) Booker {
+	return &Books{service: service, Responder: r}
 }
 
 func (b *Books) GetBooks(w http.ResponseWriter, r *http.Request) {

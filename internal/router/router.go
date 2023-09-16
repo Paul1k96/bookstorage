@@ -14,8 +14,8 @@ func NewApiRouter(controllers *modules.Controllers) http.Handler {
 		r.Route("/1", func(r chi.Router) {
 			r.Route("/books", func(r chi.Router) {
 				bookController := controllers.Books
-				r.Get("/get_books", bookController.GetBooks)
-				r.Get("/get_authors", bookController.GetAuthors)
+				r.Post("/get_books", bookController.GetBooks)
+				r.Post("/get_authors", bookController.GetAuthors)
 			})
 		})
 	})

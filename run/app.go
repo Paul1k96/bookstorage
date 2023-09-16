@@ -3,6 +3,7 @@ package run
 import (
 	"context"
 	"fmt"
+	"github.com/Paul1k96/bookstorage/internal/infrastructure/responder"
 	"log"
 	"net/http"
 	"os"
@@ -88,12 +89,14 @@ func (a *App) Bootstrap() Runner {
 		log.Fatal("error init db", err)
 	}
 
+	newResponder := responder.NewResponder()
+
 	storages := modules.NewStorages(dbx)
 	a.Storages = storages
 	services := modules.NewServices(storages)
 	a.Services = services
 
-	controllers := modules.NewControllers(services)
+	controllers := modules.NewControllers(services, newResponder)
 
 	var r *chi.Mux
 	r = router.NewRouter(controllers)
