@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "paths": {
     "/api/1/books/get_authors": {
-      "get": {
+      "post": {
         "tags": [
           "books"
         ],
@@ -25,7 +25,7 @@
       }
     },
     "/api/1/books/get_books": {
-      "get": {
+      "post": {
         "tags": [
           "books"
         ],
@@ -33,6 +33,7 @@
         "operationId": "booksRequest",
         "parameters": [
           {
+            "example": "\"Aubree Bayer\"",
             "name": "Body",
             "in": "body",
             "schema": {

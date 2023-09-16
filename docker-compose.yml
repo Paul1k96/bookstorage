@@ -12,6 +12,9 @@ services:
     networks:
       - skynet
       - books_net
+    depends_on:
+      db:
+        condition: service_healthy
     logging:
       options:
         max-size: "10m"
@@ -21,15 +24,33 @@ services:
     image: mysql:8
     hostname: ${DB_HOST}
     restart: always
+    volumes:
+      - ./dump:/docker-entrypoint-initdb.d
     ports:
       - ${HOST}:${DB_PORT}:${DB_PORT}
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_NAME}
-    volumes:
-      - ./db:/var/lib/mysql/
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 2s
+      retries: 10
     networks:
       - books_net
+  migrate:
+    image: migrate/migrate
+    env_file: .env
+    volumes:
+      - ./schema:/schema
+    networks:
+      - books_net
+    entrypoint: ["migrate", "-path", "/schema", "-database", "${DB_DRIVER}://${DB_USER}:${DB_PASSWORD}@${DB_NET}(${DB_HOST}:${DB_PORT})/${DB_NAME}"]
+    command: ["up"]
+    links:
+      - db
+    depends_on:
+      - db
 
 networks:
   books_net:

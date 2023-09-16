@@ -15,7 +15,6 @@ func NewSqlDB(dbConf config.DB) (*sqlx.DB, error) {
 	var err error
 	var dsn string
 	var dbRaw *sql.DB
-	//connStr := dbConf.User + ":" + dbConf.Password + "@" + dbConf.Net + "(" + dbConf.Host + ":" + dbConf.Port + ")/" + dbConf.Name
 	cfg := mysql.NewConfig()
 	cfg.Net = dbConf.Net
 	cfg.Addr = dbConf.Host
@@ -25,7 +24,6 @@ func NewSqlDB(dbConf config.DB) (*sqlx.DB, error) {
 	cfg.ParseTime = true
 	cfg.Timeout = time.Duration(dbConf.Timeout) * time.Second
 	dsn = cfg.FormatDSN()
-	fmt.Println(dsn)
 	ticker := time.NewTicker(1 * time.Second)
 	defer ticker.Stop()
 	timeoutExceeded := time.After(time.Second * time.Duration(dbConf.Timeout))

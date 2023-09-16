@@ -1,13 +1,16 @@
 package modules
 
-import bs "github.com/Paul1k96/bookstorage/internal/modules/books/controller"
+import (
+	"github.com/Paul1k96/bookstorage/internal/infrastructure/responder"
+	bs "github.com/Paul1k96/bookstorage/internal/modules/books/controller"
+)
 
 type Controllers struct {
 	Books bs.Booker
 }
 
-func NewControllers(services *Services) *Controllers {
+func NewControllers(services *Services, r responder.Responder) *Controllers {
 	return &Controllers{
-		Books: bs.NewBooks(services.Book),
+		Books: bs.NewBooks(services.Book, r),
 	}
 }
