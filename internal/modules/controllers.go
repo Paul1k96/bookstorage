@@ -9,6 +9,7 @@ type Controllers struct {
 	Books bs.Booker
 }
 
+// NewControllers сборка всех контроллеров в одну структуру для инициализации
 func NewControllers(services *Services, r responder.Responder) *Controllers {
 	return &Controllers{
 		Books: bs.NewBooks(services.Book, r),

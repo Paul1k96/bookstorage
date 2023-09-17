@@ -18,6 +18,7 @@ const (
 	parseRpcShutdownTimeoutError = "config: parse rpc server shutdown timeout error"
 )
 
+// AppConf структура описания конфигурации приложения
 type AppConf struct {
 	AppName   string
 	Server    Server
@@ -25,11 +26,13 @@ type AppConf struct {
 	RPCServer RPCServer
 }
 
+// RPCServer структура конфигурации RPC сервера
 type RPCServer struct {
 	Port         string
 	ShutdownTime time.Duration
 }
 
+// DB структура конфигурации базы данных
 type DB struct {
 	Driver   string
 	Net      string
@@ -42,11 +45,13 @@ type DB struct {
 	Timeout  int
 }
 
+// Server структура сервера приложения
 type Server struct {
 	Port            string
 	ShutdownTimeout time.Duration
 }
 
+// NewAppConf конструктор конфигурации приложения
 func NewAppConf() AppConf {
 	return AppConf{
 		AppName: os.Getenv(appName),
@@ -65,7 +70,9 @@ func NewAppConf() AppConf {
 	}
 }
 
+// Init инициализация конфигурации приложения
 func (a *AppConf) Init() {
+	// получение таймаута сервера из .env
 	shutdownTimeOut, err := strconv.Atoi(os.Getenv(envShutdownTimeout))
 	if err != nil {
 		log.Fatal(parseShutdownTimeoutError)
@@ -75,10 +82,13 @@ func (a *AppConf) Init() {
 		log.Fatal(parseRpcShutdownTimeoutError)
 	}
 
+	// получение таймаута базы данных из .env
 	dbTimeout, err := strconv.Atoi(os.Getenv("DB_TIMEOUT"))
 	if err != nil {
 		log.Fatal(parseDbTimeoutErr)
 	}
+
+	// получение ограничения на подключение к базе данных
 	dbMaxConn, err := strconv.Atoi(os.Getenv("MAX_CONN"))
 	if err != nil {
 		log.Fatal(parseDbMaxConnErr)

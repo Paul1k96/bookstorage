@@ -9,6 +9,7 @@ import (
 	"github.com/Paul1k96/bookstorage/internal/modules/books/service"
 )
 
+// Booker интерфейс описывает контроллер сервиса books
 type Booker interface {
 	GetBooks(http.ResponseWriter, *http.Request)
 	GetAuthors(http.ResponseWriter, *http.Request)
@@ -23,6 +24,7 @@ func NewBooks(service service.BookServicer, r responder.Responder) Booker {
 	return &Books{service: service, Responder: r}
 }
 
+// GetBooks метод для получения книг по автору. Приём и отправка данных происходит в формате JSON
 func (b *Books) GetBooks(w http.ResponseWriter, r *http.Request) {
 	var req BooksRequest
 	err := json.NewDecoder(r.Body).Decode(&req)
@@ -49,6 +51,7 @@ func (b *Books) GetBooks(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+// GetAuthors метод для получения авторов по книге. Приём и отправка данных происходит в формате JSON
 func (b *Books) GetAuthors(w http.ResponseWriter, r *http.Request) {
 	var req AuthorsRequest
 	err := json.NewDecoder(r.Body).Decode(&req)

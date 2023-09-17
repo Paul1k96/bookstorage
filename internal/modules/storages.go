@@ -9,6 +9,7 @@ type Storages struct {
 	book bs.BookStorager
 }
 
+// NewStorages сборка всех хранилищ в одной структуре для инициализации
 func NewStorages(sql *sqlx.DB) *Storages {
 	return &Storages{
 		book: bs.NewBookStorage(sql),
