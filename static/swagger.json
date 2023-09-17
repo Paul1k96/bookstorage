@@ -10,6 +10,7 @@
         "operationId": "authorsRequest",
         "parameters": [
           {
+            "example": "\"Be am\"",
             "name": "Body",
             "in": "body",
             "schema": {
