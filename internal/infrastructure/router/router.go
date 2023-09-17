@@ -8,6 +8,7 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
+// NewRouter монтирование всех путей приложения
 func NewRouter(controllers *modules.Controllers) *chi.Mux {
 	r := chi.NewRouter()
 	setSwagger(r)
@@ -16,6 +17,7 @@ func NewRouter(controllers *modules.Controllers) *chi.Mux {
 	return r
 }
 
+// setSwagger маршрутизация документации Swagger
 func setSwagger(r *chi.Mux) {
 	r.Get("/swagger", swaggerUI)
 	r.Get("/static/*", func(w http.ResponseWriter, r *http.Request) {

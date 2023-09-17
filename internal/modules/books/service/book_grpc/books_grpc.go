@@ -1,22 +1,24 @@
-package service
+package book_grpc
 
 import (
 	"context"
 
+	"github.com/Paul1k96/bookstorage/internal/modules/books/service"
 	"github.com/Paul1k96/bookstorage/pkg/grpc/books"
 )
 
 type BooksServiceGRPC struct {
-	books BookServicer
+	books service.BookServicer
 	books.UnimplementedBookServiceGRPCServer
 }
 
-func NewBooksServiceGRPC(books BookServicer) *BooksServiceGRPC {
+func NewBooksServiceGRPC(books service.BookServicer) *BooksServiceGRPC {
 	return &BooksServiceGRPC{books: books}
 }
 
+// GetBooksByAuthor метод для отправки на сторону client слайса книг по автору
 func (b *BooksServiceGRPC) GetBooksByAuthor(ctx context.Context, in *books.GetBooksByAuthorIn) (*books.GetBooksByAuthorOut, error) {
-	elem := GetBooksByAuthorIn{
+	elem := service.GetBooksByAuthorIn{
 		Name: in.Author,
 	}
 
@@ -37,8 +39,9 @@ func (b *BooksServiceGRPC) GetBooksByAuthor(ctx context.Context, in *books.GetBo
 	}, nil
 }
 
+// GetAuthorsByBook метод для отправки на сторону client слайса авторов по книге
 func (b *BooksServiceGRPC) GetAuthorsByBook(ctx context.Context, in *books.GetAuthorsByBookIn) (*books.GetAuthorsByBookOut, error) {
-	elem := GetAuthorsByBookIn{
+	elem := service.GetAuthorsByBookIn{
 		Name: in.Book,
 	}
 

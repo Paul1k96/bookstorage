@@ -11,6 +11,7 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
+// NewSqlDB подготовка и выдача драйвера для связи с базой данных MySQL
 func NewSqlDB(dbConf config.DB) (*sqlx.DB, error) {
 	var err error
 	var dsn string

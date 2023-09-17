@@ -6,6 +6,7 @@ type Services struct {
 	Book bs.BookServicer
 }
 
+// NewServices сборка всех сервисов в одну структуру для инициализации
 func NewServices(storages *Storages) *Services {
 	return &Services{
 		Book: bs.NewBookService(storages.book),

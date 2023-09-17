@@ -7,6 +7,7 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
+// NewApiRouter маршрутизация контроллеров api по эндпоинтам
 func NewApiRouter(controllers *modules.Controllers) http.Handler {
 	r := chi.NewRouter()
 

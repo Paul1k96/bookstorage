@@ -13,6 +13,7 @@ func NewBookStorage(db *sqlx.DB) BookStorager {
 	return &BookStorage{db: db}
 }
 
+// GetBooksByAuthor метод для получения книг по автору из базы данных
 func (bs *BookStorage) GetBooksByAuthor(author string) ([]models.Book, error) {
 	var books []models.Book
 
@@ -31,6 +32,7 @@ func (bs *BookStorage) GetBooksByAuthor(author string) ([]models.Book, error) {
 	return books, nil
 }
 
+// GetAuthorsByBook метод для получения авторов по книге из базы данных
 func (bs *BookStorage) GetAuthorsByBook(book string) ([]models.Author, error) {
 	var authors []models.Author
 
