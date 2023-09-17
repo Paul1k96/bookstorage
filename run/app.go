@@ -2,19 +2,20 @@ package run
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"github.com/Paul1k96/bookstorage/internal/infrastructure/responder"
+	bs "github.com/Paul1k96/bookstorage/internal/modules/books/service/book_grpc"
 	"log"
 	"net/http"
 	"os"
 
 	"github.com/Paul1k96/bookstorage/config"
 	"github.com/Paul1k96/bookstorage/internal/db"
-	"github.com/Paul1k96/bookstorage/internal/infrastructure/errors"
+	apierr "github.com/Paul1k96/bookstorage/internal/infrastructure/errors"
 	"github.com/Paul1k96/bookstorage/internal/infrastructure/router"
 	"github.com/Paul1k96/bookstorage/internal/infrastructure/server"
 	"github.com/Paul1k96/bookstorage/internal/modules"
-	bs "github.com/Paul1k96/bookstorage/internal/modules/books/service"
 	"github.com/Paul1k96/bookstorage/pkg/grpc/books"
 	"github.com/go-chi/chi/v5"
 	"golang.org/x/sync/errgroup"
@@ -61,7 +62,7 @@ func (a *App) Run() int {
 
 	errGroup.Go(func() error {
 		err := a.srv.Serve(ctx)
-		if err != nil && err != http.ErrServerClosed {
+		if err != nil && !errors.Is(err, http.ErrServerClosed) {
 			log.Println("app: server error", err)
 			return err
 		}
@@ -78,10 +79,10 @@ func (a *App) Run() int {
 	})
 
 	if err := errGroup.Wait(); err != nil {
-		return errors.GeneralError
+		return apierr.GeneralError
 	}
 
-	return errors.NoError
+	return apierr.NoError
 }
 func (a *App) Bootstrap() Runner {
 	dbx, err := db.NewSqlDB(a.conf.DB)

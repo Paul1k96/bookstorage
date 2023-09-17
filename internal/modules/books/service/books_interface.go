@@ -2,6 +2,8 @@ package service
 
 import "github.com/Paul1k96/bookstorage/internal/models"
 
+//go:generate mockgen -source books_interface.go -destination=mocks/book_mock.go
+
 type BookServicer interface {
 	GetBooksByAuthor(in GetBooksByAuthorIn) GetBooksByAuthorOut
 	GetAuthorsByBook(in GetAuthorsByBookIn) GetAuthorsByBookOut
